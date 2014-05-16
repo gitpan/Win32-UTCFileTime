@@ -1,13 +1,13 @@
 #!perl
 #===============================================================================
 #
-# t/02_dir_times.t
+# t/03_dir_times.t
 #
 # DESCRIPTION
 #   Test script to check getting/setting directory times.
 #
 # COPYRIGHT
-#   Copyright (C) 2003-2006 Steve Hay.  All rights reserved.
+#   Copyright (C) 2003-2006, 2014 Steve Hay.  All rights reserved.
 #
 # LICENCE
 #   You may distribute under the terms of either the GNU General Public License
@@ -15,7 +15,7 @@
 #
 #===============================================================================
 
-use 5.006000;
+use 5.008001;
 
 use strict;
 use warnings;
@@ -80,12 +80,13 @@ MAIN: {
 
     rmdir $dir or die "Can't delete directory '$dir': $!\n" if -e $dir;
     mkdir $dir or die "Can't create directory '$dir': $!\n";
+    my($age, $utime, $ret);
     $time = time;
     for my $i (-7 .. 7) {
-        my $age = $i * 5000000;
-        my $utime = $time + $age;
+        $age = $i * 5000000;
+        $utime = $time + $age;
 
-        my $ret = utime $utime, $utime, $dir;
+        $ret = utime $utime, $utime, $dir;
         ($errno, $lasterror) = ($!, $^E);
         ok($ret, 'utime() returns OK for time ' . scalar gmtime $utime) or
             diag("\$! = '$errno', \$^E = '$lasterror'");

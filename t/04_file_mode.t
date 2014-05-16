@@ -1,13 +1,13 @@
 #!perl
 #===============================================================================
 #
-# t/03_file_mode.t
+# t/04_file_mode.t
 #
 # DESCRIPTION
 #   Test script to check getting file mode.
 #
 # COPYRIGHT
-#   Copyright (C) 2003-2005 Steve Hay.  All rights reserved.
+#   Copyright (C) 2003-2005, 2014 Steve Hay.  All rights reserved.
 #
 # LICENCE
 #   You may distribute under the terms of either the GNU General Public License
@@ -15,7 +15,7 @@
 #
 #===============================================================================
 
-use 5.006000;
+use 5.008001;
 
 use strict;
 use warnings;
@@ -37,10 +37,10 @@ BEGIN {
 MAIN: {
     my @files = map { "test.$_" } qw(txt exe bat com cmd);
 
-    my(@cstats, @rstats, @astats);
+    my($fh, @cstats, @rstats, @astats);
 
     foreach my $file (@files) {
-        open my $fh, ">$file" or die "Can't create file '$file': $!\n";
+        open $fh, ">$file" or die "Can't create file '$file': $!\n";
         close $fh;
     }
 
